@@ -1,0 +1,21 @@
+#include <iostream>
+
+using namespace std;
+
+class Output
+{
+public:
+  template <class T> 
+  	void operator() ( T x )
+  {
+    std::cout << x << ", ";
+  }
+};
+
+int main()
+{
+	Output prt;
+	prt(31);	prt(3.3);
+	prt('A');	prt("Test");
+}
+
