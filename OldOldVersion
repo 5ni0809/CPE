@@ -1,0 +1,33 @@
+#include <cstdlib>
+#include <iostream>
+
+using namespace std;
+int compare(const void *arg1, const void *arg2);
+
+int main(void)
+{
+  const int max_size = 10;
+  int num[max_size];
+  
+  // 讀入整數並累計個數，直到輸入為非整數型態 
+  int n;
+  for (n = 0; cin >> num[n]; n ++);
+  
+  // C標準庫中的快速排序（quick-sort）函數
+  qsort(num, n, sizeof(int), compare);
+  
+  for (int i = 0; i < n; i ++)
+  	cout << num[i] << " ";
+  
+  return 0;
+}
+
+// 比較兩個數的大小，
+// 如果*(int *)arg1比*(int *)arg2小，則返回-1
+// 如果*(int *)arg1比*(int *)arg2大，則返回1
+// 如果*(int *)arg1等於*(int *)arg2，則返回0
+int compare(const void *arg1, const void *arg2)
+{
+  return (*(int *)arg1 < *(int *)arg2) ? -1 :
+  (*(int *)arg1 > *(int *)arg2) ? 1 : 0;
+}
