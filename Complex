@@ -1,0 +1,44 @@
+#include "Complex.h"
+#include <iostream>
+
+Complex::Complex( float real, float img): realPart(real), imagPart(img){
+}
+
+Complex::Complex() {
+    realPart = 0.0;
+    imagPart = 0.0;
+}
+
+Complex::Complex(float real) {
+    realPart = real;
+    imagPart = 0.0;
+}
+
+Complex Complex::operator+( const Complex &c) const{
+    Complex temp( realPart + c.realPart, imagPart + c.imagPart);
+    return temp;
+}
+
+Complex Complex::operator-( const Complex &c) const{
+    Complex temp( realPart - c.realPart, imagPart - c.imagPart);
+    return temp;
+}
+
+Complex Complex::operator*( const Complex &c) const{
+    Complex temp( realPart * c.realPart, imagPart * c.imagPart);
+    return temp;
+}
+
+Complex Complex::operator/( const Complex &c) const{
+    Complex temp( realPart / c.realPart, imagPart / c.imagPart);
+    return temp;
+}
+
+const Complex& Complex::operator=(const Complex &c) {
+  if( &c != this ) {
+    this->realPart = c.realPart;
+    this->imagPart = c.imagPart;
+  }
+  
+  return *this;
+}
