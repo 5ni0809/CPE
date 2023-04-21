@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(void)
+{
+	int n, x, max = 0;
+	int count[127] = {0};
+	char str[1000], s;
+	
+	while((scanf("%d",&n)) != EOF)
+	{
+		for(int i = 0; i < n; i++){
+			gets(str);
+			for(int j = 0; j < strlen(str); j++){
+				s = str[j];
+				if(s >= 'a' && s <= 'z')
+					s -= 32;
+				if(s >= 'A' && s <= 'Z')
+					++count[s];
+			}
+			for(s = 'A'; s <= 'Z'; s++){
+				if(count[s] > max)
+					max = count[s];
+			}
+		}
+		for(x = max; x > 0; x--){
+			for(s = 'A'; s <= 'Z'; s++){
+				if(count[s] == x)
+					printf("%c %d\n",s,x);
+			}
+		}
+	}
+	return 0;
+}
