@@ -1,0 +1,52 @@
+#include <cstdio>
+#include <iostream>
+#include <iomanip>
+using namespace std;
+class C2DShape {						//C2DShaperu 基礎類別
+protected:
+	float m_fArea;						//面積變數
+public:
+	virtual void Show(void) = 0;		//純虛擬函式 Show
+	virtual void Calculate(void) = 0;	//純虛擬函式 Calculate
+};
+class CCircle :public C2DShape {		//CCircle 衍生類別
+private:
+	float m_fRadius;					//半徑變數
+public:
+	CCircle(float r) {					//CCircle 建構元，設定半徑
+		m_fRadius = r;
+	}
+	void Show(void){					//顯示
+		cout << "半徑 " << m_fRadius << " 的圓, 面積為 " << m_fArea<<endl;
+	}
+	void Calculate(void) {				//計算面積
+		m_fArea = (m_fRadius*m_fRadius)*3.14159;
+	}
+};
+class CRectangle :public C2DShape {		//CRectangle 衍生類別
+private:
+	float m_fLength,m_fWidth;			//長、寬變數
+public:
+	CRectangle(float l,float w) {		//CRectangle 建構元，設定長寬
+		m_fLength = l;
+		m_fWidth = w;
+	}
+	void Show(void) {					//顯示
+		cout << "寬 " << m_fLength << " 高 " << m_fWidth << " 的矩形, 面積為 " << m_fArea << endl;
+	}
+	void Calculate(void) {				//計算面積
+		m_fArea = m_fLength*m_fWidth;
+	}
+};
+void main(void) {
+	int i;
+	C2DShape *pShape[3];				//宣告指標物件陣列
+	pShape[0] = new CCircle(4.5);		//給半徑
+	pShape[1] = new CCircle(3.3);		//給半徑
+	pShape[2] = new CRectangle(2.5, 3.5);	//給長寬
+	cout << setprecision(5);			//設定輸出精確度 
+	for (i = 0; i < 3; i++) pShape[i]->Calculate();	//呼叫 Calculate 函式
+	for (i = 0; i < 3; i++) pShape[i]->Show();		//呼叫 Show 函式
+	for (i = 0; i < 3; i++)delete pShape[i];
+	system("pause");
+}
