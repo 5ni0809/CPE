@@ -1,0 +1,97 @@
+#include <iostream>
+#include <conio.h>
+#include <cstdlib>
+#include <string.h>
+using namespace std;
+class Csong {
+private:
+	int iy, c;
+	int songcount;
+	char song[100][20];
+	char temp[20];
+public:
+	Csong() {
+		iy = 0;
+		songcount = 0;
+	}
+	void ShowSong(void) {
+		system("cls");
+		cout << "用 w 、 s 來移動'*'  按 Enter 選擇" << endl << endl;
+		if (iy == 0)
+			cout << " * ";
+		else
+			cout << "   ";
+		cout << "新增歌曲" << endl;
+		for (int i = 0; i < songcount; i++)
+		{
+			if (iy == i + 1)
+				cout << " * ";
+			else
+				cout << "   ";
+			for (int j = 0; j < strlen(song[i]); j++)
+				cout << song[i][j];
+			cout << endl;
+		}
+	}
+	int Selectsong(char cIn) {
+		if (cIn == 13 && iy == 0)
+			AddSong();
+		else if (cIn == 'w'&&iy > 0)
+			iy--;
+		else if (cIn == 's'&&iy < songcount)
+			iy++;
+		return(iy);
+	}
+	void AddSong(void) {
+		system("cls");
+		songcount++;
+		cout << "請輸入歌曲名稱" << endl;
+		cin >> song[songcount - 1];
+		Sorting();
+	}
+	void ShowSelectSong(void) {
+		system("cls");
+		cout << "你選的歌是：";
+		for (int j = 0; j < strlen(song[iy - 1]); j++)
+			cout << song[iy - 1][j];
+		cout << endl;
+	}
+	void Sorting(void)
+	{
+		for (int i = 0; i < songcount - 1; i++)
+		{
+			for (int j = 0; j < songcount - 1 - i; j++)
+			{
+				if (song[j][0] > song[j + 1][0])
+				{
+					c = strlen(song[j]);
+					for (int z = 0; z < strlen(song[j]); z++)
+						temp[z] = song[j][z];
+					for (int z = strlen(song[j]); z >= 0; z--)
+						song[j][z] = '\0';
+					for (int z = 0; z < strlen(song[j + 1]); z++)
+						song[j][z] = song[j + 1][z];
+					for (int z = strlen(song[j + 1]); z >= 0; z--)
+						song[j + 1][z] = '\0';
+					for (int z = 0; z < c; z++)
+						song[j + 1][z] = temp[z];
+					for (int z = c; z >= 0; z--)
+						temp[z] = '\0';
+				}
+			}
+		}
+	}
+};
+int main(void) {
+	char cIn;
+	int y = 0;
+	Csong songX;
+	songX.ShowSong();
+	while (!((cIn = _getch()) == 13 && y != 0))
+	{
+		y = songX.Selectsong(cIn);
+		songX.ShowSong();
+	}
+	songX.ShowSelectSong();
+	system("pause"); return(0);
+}
