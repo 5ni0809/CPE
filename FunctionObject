@@ -1,0 +1,21 @@
+#include <iostream>
+
+using namespace std;
+
+class GenericNegate
+{
+public: 
+ template <class T> T operator()
+  (T t) const {return -t;}
+};
+
+int main()
+{
+ GenericNegate negate;
+ int val = 5;
+ cout<< negate(5.3333) << endl; // double
+ cout<< negate(val) << endl; // int
+ long lon = 333;
+ cout << negate(lon) << endl;
+}
+
