@@ -1,0 +1,59 @@
+#include <cstdio>
+#include <iostream>
+using namespace std;
+class CCharacter {														//CCharacter 基礎類別
+public:
+	int m_ix, m_iy;														//位置變數
+	char m_cIcon;														//圖示變數
+	CCharacter(int x, int y,char c){									//CCharacter 建構元
+		m_ix = x; 
+		m_iy = y;
+		m_cIcon = c;
+	}
+	void show(void) {													//顯示位置及圖示
+		cout << "(" << m_ix << "," << m_iy << ")" << m_cIcon << endl;
+	}
+};
+class CPlayer :public CCharacter {										//CPlayer 衍生類別
+private:
+	int Health, Attack;													//血量、攻擊變數
+public:
+	CPlayer(int x = 0, int y = 0, char c = '@', int h = 1, int a = 1)	//CPlayer 建構元，給預設值
+	:CCharacter(x,y,c){
+		Health = h;
+		Attack = a;
+	}
+	void ShowStatus(void) {												//顯示血量、攻擊
+		cout << "Player:  Health = " << Health << " , Attack = " << Attack << endl;
+	}
+};
+class CMonster :public CCharacter {										//CMonster 衍生類別
+private:
+	int Health, Attack;													//血量、攻擊變數
+public:
+	CMonster(int x = 0, int y = 0, char c = '@', int h = 1, int a = 1)	//CMonster 建構元，給預設值
+		:CCharacter(x, y, c) {
+		Health = h;
+		Attack = a;
+	}
+	void ShowStatus(void) {												//顯示血量、攻擊
+		cout << "Monster:  Health = " << Health << " , Attack = " << Attack << endl;
+	}
+};
+class CVillager :public CCharacter {									//CVillager 衍生類別
+public:
+	CVillager(int x = 0, int y = 0, char c = '@')						//CVillager 建構元，給預設值
+		:CCharacter(x, y, c) {
+
+	}
+};
+void main(void)
+{
+	CPlayer player1;													//宣告物件變數player1
+	CMonster mon1(5,3,'#',10,10);										//宣告物件變數mon1，給值
+	CVillager vlger1(1, 1, '!');										//宣告物件變數vlger1，給值
+	player1.m_ix = 2; player1.m_iy = 3; player1.m_cIcon = '*';			//給player1值
+	player1.show(); mon1.show(); vlger1.show();							//呼叫show函式
+	player1.ShowStatus(); mon1.ShowStatus();							//呼叫ShowStatus函式
+	system("pause");
+}
