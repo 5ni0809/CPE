@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+
+using namespace std;
+
+int main(void)
+{
+  typedef vector<int> int_vector;
+  typedef istream_iterator<int> istream_itr;
+  typedef ostream_iterator<int> ostream_itr;
+  typedef back_insert_iterator< int_vector > back_ins_itr;
+  
+  // STL中的vector容器
+  int_vector num;
+  
+  // 從標準輸入設備讀入整數，
+  // 直到輸入的是非整型數據為止
+  copy(istream_itr(cin), istream_itr(), back_ins_itr(num));
+  
+  // STL中的排序算法
+  sort(num.begin(), num.end());
+  
+  // 將排序結果輸出到標準輸出設備
+  copy(num.begin(), num.end(), ostream_itr(cout, "\n"));
+  return 0;
+}
+
