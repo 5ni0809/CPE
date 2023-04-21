@@ -1,0 +1,23 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int step(int x, int y)
+{
+	int s = x + y;
+	return((1 + s)*s / 2) + x;
+}
+int main()
+{
+	int i, n, count, x1, y1, x2, y2;
+	scanf("%d", &n);
+	for ( i = 0; i < n; i++)
+	{
+		scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
+		count = step(x2, y2) - step(x1, y1);
+		printf("Case %d: %d\n", i + 1, count);
+	}
+	
+	system("pause");
+	return (0);
+}
