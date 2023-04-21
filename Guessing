@@ -1,0 +1,84 @@
+#include <iostream>
+#include <conio.h>
+#include <cstdlib>
+#include <time.h>
+using namespace std;
+const char _123[][10] = { "剪刀","石頭","布" };
+class CGuessing {
+private:
+	int computer, people, now, game;
+public:
+	CGuessing() {
+		srand((unsigned)time(NULL));
+		now = 0;
+		game = 1;
+	}
+	void Generate(void) {
+		computer = rand() % 3 + 1;		// 1 剪刀    2 石頭    3 布
+	}
+	int Judge(void) {
+		Generate();
+		cout << "請輸入  1 剪刀    2 石頭    3 布" << endl;
+		cin >> people;
+		switch (people)
+		{
+		case 1:
+			if (computer == 1)
+				now = 0;
+			else if (computer == 2)
+				now = 1;
+			else
+				now = -1;
+			break;
+		case 2:
+			if (computer == 2)
+				now = 0;
+			else if (computer == 3)
+				now = 1;
+			else
+				now = -1;
+			break;
+		case 3:
+			if (computer == 3)
+				now = 0;
+			else if (computer == 1)
+				now = 1;
+			else
+				now = -1;
+			break;
+		}
+		return(now);
+	}
+	int Show(int cwin, int pwin) {
+		system("cls");
+		cout << "電腦出  " << _123[computer - 1] << "       玩家出  " << _123[people - 1] << endl << endl;
+		if (pwin<3 && cwin<3)
+			cout << "電腦贏" << cwin << "次   玩家贏" << pwin << "次" << endl << endl;
+		else if (cwin == 3) {
+			cout << "電腦勝利   遊戲結束" << endl << endl;
+			game = 0;
+		}
+		else {
+			cout << "玩家勝利   遊戲結束" << endl << endl;
+			game = 0;
+		}
+		return(game);
+	}
+
+};
+int main(void) {
+	CGuessing Cgu;
+	int cwin, pwin, game = 1, now;
+	cwin = pwin = now = 0;
+	while (game)
+	{
+		now = Cgu.Judge();
+		if (now == 1)
+			cwin++;
+		if (now == -1)
+			pwin++;
+		game = Cgu.Show(cwin, pwin);
+	}
+	system("pause"); return(0);
+
+}
