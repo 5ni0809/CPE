@@ -1,0 +1,89 @@
+#include <iostream>
+#include <conio.h>
+#include <cstdlib>
+#include <iomanip>
+#include <time.h>
+#define Y_MAX 10
+#define X_MAX 10
+using namespace std;
+class CMouse {
+private:
+	int ix[10], iy[10];
+	int iStatus[10];
+	char cIcon;
+	char cMicon[2];
+public:
+	CMouse() {
+		srand((unsigned)time(NULL));
+		for (int i = 0; i < 10; i++)
+		{
+			ix[i] = rand() % 10 + 1;
+			iy[i] = rand() % 10 + 1;
+			iStatus[i] = 1;
+		}
+		cIcon = cMicon[0] = '@'; cMicon[1] = 'Q';
+	}
+	void Newtimes() {
+		cIcon = cMicon[0];
+	}
+	void Show(int times)
+	{
+		system("cls");
+		for (int i = 1; i <= ix[times]; i++)cout << endl;
+		cout << setw(iy[times] + 1) << setfill(' ') << cIcon << endl;
+	}
+	int Getstatus(int times) { return(iStatus[times]); }
+	int Updata(char cIn, int times) {
+		switch (cIn) {
+		case 'w':
+			ix[times]--;
+			if (ix[times] < 0)iStatus[times] = 0;
+			else if (ix[times] == 0) { iStatus[times] = 2; cIcon = cMicon[1]; }
+			else if (iy[times] >= 1 && iy[times] <= Y_MAX) { iStatus[times] = 1; cIcon = cMicon[0]; }
+			break;
+		case 's':
+			ix[times]++;
+			if (ix[times] >X_MAX + 1)iStatus[times] = 0;
+			else if (ix[times] == X_MAX + 1) { iStatus[times] = 2; cIcon = cMicon[1]; }
+			else if (iy[times] >= 1 && iy[times] <= Y_MAX) { iStatus[times] = 1; cIcon = cMicon[0]; }
+			break;
+		case 'a':
+			iy[times]--;
+			if (iy[times] < 0)iStatus[times] = 0;
+			else if (iy[times] == 0) { iStatus[times] = 2; cIcon = cMicon[1]; }
+			else if (ix[times] >= 1 && ix[times] <= X_MAX) { iStatus[times] = 1; cIcon = cMicon[0]; }
+			break;
+		case 'd':
+			iy[times]++;
+			if (iy[times] >Y_MAX + 1)iStatus[times] = 0;
+			else if (iy[times] == Y_MAX + 1) { iStatus[times] = 2; cIcon = cMicon[1]; }
+			else if (ix[times] >= 1 && ix[times] <= X_MAX) { iStatus[times] = 1; cIcon = cMicon[0]; }
+			break;
+		}
+		return(iStatus[times]);
+	}
+};
+int main(void) {
+	char cIn;
+	int iStatus, times = 0;
+	CMouse mouseX;
+	while (times < 10)
+	{
+		mouseX.Show(times);
+		iStatus = mouseX.Getstatus(times);
+		cIn = _getch();
+		iStatus = mouseX.Updata(cIn, times);
+		if (iStatus)mouseX.Show(times);
+		else
+		{
+			if (times < 9) {
+				cout << "第 " << times + 1 << " 隻" << "老鼠已經死亡,第 " << times + 2 << " 隻老鼠開始" << endl;
+				system("pause");
+			}
+			times++;
+			mouseX.Newtimes();
+		}
+	}
+	cout << "第 " << times << " 隻" << "老鼠已經死亡,遊戲結束" << endl;
+	system("pause"); return(0);
+}
